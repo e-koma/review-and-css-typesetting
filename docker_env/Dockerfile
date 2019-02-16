@@ -1,4 +1,4 @@
-FROM vvakame/review:3.0
+FROM ekoma/docker-review:latest
 
 ARG VIVLIOSTYLE_VERSION
 WORKDIR /repository_root
