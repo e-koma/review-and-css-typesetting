@@ -1,6 +1,7 @@
 FROM vvakame/review:3.0
 
 ARG VIVLIOSTYLE_VERSION
+WORKDIR /repository_root
 
 RUN apt-get -y update \
  && apt-get -y upgrade \
@@ -23,14 +24,12 @@ RUN apt-get -y update \
  && unzip vivliostyle-js-${VIVLIOSTYLE_VERSION}.zip \
  && cp ./vivliostyle-js-${VIVLIOSTYLE_VERSION}/start-webserver /usr/local/bin/vivliostyle-server \
  && rm -rf vivliostyle-js-${VIVLIOSTYLE_VERSION}.zip \
+ && cd /repository_root \
+ && npm install -g n \
+ && n v11.6.0 \
+ && npm i -g npm@6.6.0 \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
-
-WORKDIR /repository_root
-
-RUN npm install -g n \
- && n v11.6.0 \
- && npm i -g npm@6.6.0
 
 # Install latest chrome dev package and fonts to support major charsets (Chinese, Japanese, Arabic, Hebrew, Thai and a few others)
 # Note: this installs the necessary libs to make the bundled version of Chromium that Puppeteer
