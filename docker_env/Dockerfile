@@ -1,5 +1,7 @@
 FROM vvakame/review:3.0
 
+ARG VIVLIOSTYLE_VERSION
+
 RUN apt-get -y update \
  && apt-get -y upgrade \
  && apt-get -y update \
@@ -15,18 +17,14 @@ RUN apt-get -y update \
     unzip \
     wget \
     zlib1g-dev \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
-
-WORKDIR /vivliostyle
-
-ARG VIVLIOSTYLE_VERSION
-RUN rm -rf /usr/local/bin/vivliostyle-server \
+ && cd /vivliostyle \
+ && rm -rf /usr/local/bin/vivliostyle-server \
  && wget https://github.com/vivliostyle/vivliostyle.js/releases/download/${VIVLIOSTYLE_VERSION}/vivliostyle-js-${VIVLIOSTYLE_VERSION}.zip \
  && unzip vivliostyle-js-${VIVLIOSTYLE_VERSION}.zip \
  && cp ./vivliostyle-js-${VIVLIOSTYLE_VERSION}/start-webserver /usr/local/bin/vivliostyle-server \
- && rm -rf vivliostyle-js-${VIVLIOSTYLE_VERSION}.zip
-
+ && rm -rf vivliostyle-js-${VIVLIOSTYLE_VERSION}.zip \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /repository_root
 
