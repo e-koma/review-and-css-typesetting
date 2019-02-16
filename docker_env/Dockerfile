@@ -1,10 +1,22 @@
 FROM vvakame/review:3.0
 
-RUN apt-get -y update || true
-RUN apt-get -y upgrade && \
-	apt-get -y update && \
-	apt-get -y install build-essential zlib1g-dev libxslt1-dev libxml2 libxml2-dev ruby-dev libgconf-2-4 wget unzip curl procps
-
+RUN apt-get -y update \
+ && apt-get -y upgrade \
+ && apt-get -y update \
+ && apt-get -y install \
+    build-essential \
+    curl \
+    libgconf-2-4 \
+    libxml2 \
+    libxml2-dev \
+    libxslt1-dev \
+    procps \
+    ruby-dev \
+    unzip \
+    wget \
+    zlib1g-dev \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /vivliostyle
 
