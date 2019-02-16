@@ -3,7 +3,7 @@ FROM vvakame/review:3.0
 ARG VIVLIOSTYLE_VERSION
 WORKDIR /repository_root
 
-RUN apt-get -y update \
+RUN apt-get -y update || true \
  && apt-get -y upgrade \
  && apt-get -y update \
  && apt-get -y install \
@@ -18,6 +18,7 @@ RUN apt-get -y update \
     unzip \
     wget \
     zlib1g-dev \
+ && mkdir -p /vivliostyle \
  && cd /vivliostyle \
  && rm -rf /usr/local/bin/vivliostyle-server \
  && wget https://github.com/vivliostyle/vivliostyle.js/releases/download/${VIVLIOSTYLE_VERSION}/vivliostyle-js-${VIVLIOSTYLE_VERSION}.zip \
