@@ -21,18 +21,18 @@ RUN apt-get -y update \
 WORKDIR /vivliostyle
 
 ARG VIVLIOSTYLE_VERSION
-RUN rm -rf /usr/local/bin/vivliostyle-server
-RUN wget https://github.com/vivliostyle/vivliostyle.js/releases/download/${VIVLIOSTYLE_VERSION}/vivliostyle-js-${VIVLIOSTYLE_VERSION}.zip
-RUN unzip vivliostyle-js-${VIVLIOSTYLE_VERSION}.zip
-RUN cp ./vivliostyle-js-${VIVLIOSTYLE_VERSION}/start-webserver /usr/local/bin/vivliostyle-server
-RUN rm -rf vivliostyle-js-${VIVLIOSTYLE_VERSION}.zip
+RUN rm -rf /usr/local/bin/vivliostyle-server \
+ && wget https://github.com/vivliostyle/vivliostyle.js/releases/download/${VIVLIOSTYLE_VERSION}/vivliostyle-js-${VIVLIOSTYLE_VERSION}.zip \
+ && unzip vivliostyle-js-${VIVLIOSTYLE_VERSION}.zip \
+ && cp ./vivliostyle-js-${VIVLIOSTYLE_VERSION}/start-webserver /usr/local/bin/vivliostyle-server \
+ && rm -rf vivliostyle-js-${VIVLIOSTYLE_VERSION}.zip
 
 
 WORKDIR /repository_root
 
-RUN npm install -g n
-RUN n v11.6.0
-RUN npm i -g npm@6.6.0
+RUN npm install -g n \
+ && n v11.6.0 \
+ && npm i -g npm@6.6.0
 
 # Install latest chrome dev package and fonts to support major charsets (Chinese, Japanese, Arabic, Hebrew, Thai and a few others)
 # Note: this installs the necessary libs to make the bundled version of Chromium that Puppeteer
