@@ -51,17 +51,20 @@ RUN apt-get -y update \
 
 # It's a good idea to use dumb-init to help prevent zombie chrome processes.
 ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 /usr/local/bin/dumb-init
-RUN chmod +x /usr/local/bin/dumb-init
-
+RUN chmod +x /usr/local/bin/dumb-init \
 # Uncomment to skip the chromium download when installing puppeteer. If you do,
 # you'll need to launch puppeteer with:
 #     browser.launch({executablePath: 'google-chrome-unstable'})
 # ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
-
-RUN rm -rf /etc/apt/sources.list.d/google.list && apt-get update && apt-get -qq -y install curl
-
+ && rm -rf /etc/apt/sources.list.d/google.list \
+ && apt-get update \
+ && apt-get -qq -y install \
+    curl \
 # fonts
-RUN apt-get install -y fonts-ipa* fonts-ricty-diminished
+    fonts-ipa* \
+    fonts-ricty-diminished \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
 COPY startup.sh /startup.sh
 RUN chmod +x /startup.sh
